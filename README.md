@@ -26,10 +26,10 @@ agentsList1 = atera.get_agents(page=1, amount=50)
 ```
 ### get_agents_all()
 Returns all agents it can find, by looping through each page it can find.
-It WILL print which page it's on and how many pages there are. so be aware of that.
+It WILL print which page it's on and how many pages there are, unless you set echo=False
 ```python
 # Returns as list of dicts, just like get_agents()
-agentsList = atera.get_agents_all()
+agentsList = atera.get_agents_all(echo=False)
 ```
 ### get_agent()
 Just grabs a single agent via it's Atera AgentID.
