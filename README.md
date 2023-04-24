@@ -9,7 +9,7 @@ and then run it's defs with things like
 ```python
 atera.get_agents(page=5)
 ```
-all functions have docstrings so supported IDEs like Code and PyCharm can give documentation on how to use them.
+all functions have docstrings so supported IDEs like VSCode and PyCharm can give documentation on how to use them.
 
 Due to how the API works, agents are returned as a dict 
 
