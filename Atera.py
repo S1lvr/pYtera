@@ -24,7 +24,7 @@ class AteraAPI(object):
         Returns: whatever you asked for.
 
         """
-        headers = {'X-Api-Key': self.api_key}
+        headers = {'X-Api-Key': self._api_key}
         url = self.api_uri + endpoint
         response = requests.get(url, headers=headers)
         return json.loads(response.text)
@@ -41,7 +41,7 @@ class AteraAPI(object):
         Returns:
 
         """
-        headers = {'X-Api-Key': self.api_key, 'Content-Type': 'application/json'}
+        headers = {'X-Api-Key': self._api_key, 'Content-Type': 'application/json'}
         url = self.api_uri + endpoint
         requests.post(url, headers=headers, data=json.dumps(data))
 
@@ -53,7 +53,7 @@ class AteraAPI(object):
             endpoint:
             data:
         """
-        headers = {'X-Api-Key': self.api_key, 'Content-Type': 'application/json'}
+        headers = {'X-Api-Key': self._api_key, 'Content-Type': 'application/json'}
         url = self.api_uri + endpoint
         requests.put(url, headers=headers, data=json.dumps(data))
 
@@ -64,7 +64,7 @@ class AteraAPI(object):
         Args:
             endpoint:
         """
-        headers = {'X-Api-Key': self.api_key}
+        headers = {'X-Api-Key': self._api_key}
         url = self.api_uri + endpoint
         requests.delete(url, headers=headers)
 
