@@ -11,7 +11,7 @@ class AteraAPI(object):
         Init for AteraAPI
         :param key: Atera API Key
         """
-        self.__api_key = key
+        self._api_key = key
         self.api_uri = "https://app.atera.com/api/v3/"
 
     def get(self, endpoint: str):
