@@ -32,8 +32,10 @@ It WILL print which page it's on and how many pages there are, unless you set ec
 agentsList = atera.get_agents_all(echo=False)
 ```
 ### get_agent()
-Just grabs a single agent via it's Atera AgentID.
+Just grabs a single agent via it's Atera AgentID or computer name.
+It tells the difference based off if it's an int or str
 ```python
-# Returns as a single dict.
-agent = atera.get_agent("<AgentID>")
+# Returns as a single dict, or a list of dicts if more than one computer has that name.
+agent_id = atera.get_agent(14395)
+agent_name = atera.get_agent("My_Computer")
 ```
