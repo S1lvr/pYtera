@@ -73,14 +73,14 @@ class AteraAPI(object):
         Get list of agents
         :param page: Page #, defaults to 1
         :param amount: Number per page, defaults to 50
-        :return: Returns list of agents as json
+        :return: Returns list of agents as list of dicts
         """
         return self.get(f"agents?page={page}&itemsInPage={amount}")
 
     def get_agents_all(self):
         """
-                Grabs all agents, looping through pages
-                :return: agents as dict
+                Grabs all agents, looping through all pages it sees.
+                :return: agents as list of dicts
                 """
         agents = self.get_agents(page=1, amount=50)
         print(f"Attempt 1 to pull page {agents['page']} of {agents['totalPages']}")
