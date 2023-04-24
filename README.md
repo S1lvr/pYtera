@@ -1,7 +1,7 @@
 # pYtera
 Python module for interfacing with the Atera API in a simple way with a terrible name.
 ## How does it do
-The entire thing is just a class so it's quite simple.
+The entire thing is just a class so the design is very human.
 ```python
 atera = Atera.AteraAPI("<YOUR_ATERA_API_KEY>")
 ```
