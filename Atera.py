@@ -95,10 +95,21 @@ class AteraAPI(object):
             output.append(agents['items'])
         return [item for sublist in output for item in sublist]
 
-    def get_agent(self, agentid: int):
+    def get_agent(self, agentid):
         """
         Grabs specific agent info
-        :param agentid: AgentID of computer
-        :return: Agent Info as JSON
+        :param agentid: AgentID of computer or Computer Name.\nAn int will be treated as AgentID, a str will be treated as computer name.
+        :return: Agent Info as Dict
         """
-        return self.get(f"agents/{agentid}")
+        if type(agentid) == int:
+            return self.get(f"agents/{agentid}")
+        if type(agentid) == str:
+            return self.get(f"agents/machine/{agentid}")
+    
+    def get_ticket(self, ticketId):
+        """
+        Returns specific ticket.
+        :param ticketId: The ID of the ticket
+        :return: Ticket as Dict
+        """
+        return self.get(f"tickets/{ticketId}")
