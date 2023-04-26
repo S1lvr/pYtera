@@ -113,3 +113,40 @@ class AteraAPI(object):
         :return: Ticket as Dict
         """
         return self.get(f"tickets/{ticketId}")
+
+        def get_tickets(self, statustype=None, page=1, amount=50):
+        """
+        Get list of agents
+        :param statustype: The type of status of the ticket
+        :param page: Page #, defaults to 1
+        :param amount: Number per page, defaults to 50
+        :return: Returns list of agents as json
+        """
+        if statustype:
+            return self._get(f"tickets?page={page}&itemsInPage={amount}&ticketStatus={statustype}")
+        else:
+            return self._get(f"tickets?page={page}&itemsInPage={amount}")
+
+    def get_tickets_all(self, status, echo=False):
+        """
+        Grabs all tickets, looping through pages\nI don't recommend this one as much.\nYou're better off just making a loop with get_tickets()
+        :return: tickets as list of dict
+        """
+        if status:
+            tickets = self.get_tickets(status)
+        else:
+            tickets = self.get_tickets(None)
+        if echo:
+            print(f"Attempt 1 to pull page {tickets['page']} of {tickets['totalPages']}")
+        output = [tickets['items']]
+        i = 1
+        while int(tickets['page']) < int(tickets['totalPages']):
+            i += 1
+            if status:
+                tickets = self.get_tickets(status, page=i)
+            else:
+                tickets = self.get_tickets(page=i)
+            if echo:
+                print(f"Attempt {i} to pull page {tickets['page']} of {tickets['totalPages']}")
+            output.append(tickets['items'])
+        return [item for sublist in output for item in sublist]
