@@ -39,3 +39,23 @@ It tells the difference based off if it's an int or str
 agent_id = atera.get_agent(14395)
 agent_name = atera.get_agent("My_Computer")
 ```
+### get_ticket()
+Grabs 1 ticket by it's number
+```python
+# Returns as a single dict.
+ticket = atera.get_ticket(28402)
+```
+### get_tickets()
+Works like get_agents() but with tickets.
+you can include the ```statustype``` arg if you want, which will only grab tickets with that status.
+```python
+# Returns as a list of dicts
+tickets_5 = atera.get_tickets(page=5, amount 45)
+tickets_1 = atera.get_tickets()
+tickets_closed = atera.gettickets(statustype="Closed")
+```
+### get_tickets_all()
+For the insane, a method to pull EVERY ticket in Atera.
+I'd recommend against it, but I'm not you.
+```python
+TooManyTickets = atera.get_tickets_all()
