@@ -3,6 +3,7 @@ Python module for interfacing with the Atera API in a simple way with a terrible
 ## How does it do
 The entire thing is just a class so the design is very human.
 ```python
+import Atera
 atera = Atera.AteraAPI("<YOUR_ATERA_API_KEY>")
 ```
 and then run it's defs with things like
