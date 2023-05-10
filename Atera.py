@@ -1,4 +1,5 @@
 import requests
+import urllib3
 import json
 
 
@@ -24,12 +25,14 @@ class AteraAPI(object):
         Returns: whatever you asked for.
 
         """
-        headers = {'X-Api-Key': self._api_key}
+        http = urllib3.PoolManager()
         url = self.api_uri + endpoint
-        response = requests.get(url, headers=headers)
-        return json.loads(response.text)
+        headers = {'X-API-KEY': self._api_key}
+        response = http.request('GET', url, headers=headers)
+        res = response.data.decode('utf-8')
+        return json.loads(res)
 
-    def post(self, endpoint: str, data):
+    def post(self, endpoint: str, data: dict):
         """
         CREATE SOMETHING, used for Tickets mostly.\n
         See https://app.atera.com/apidocs for more info
@@ -41,9 +44,12 @@ class AteraAPI(object):
         Returns:
 
         """
-        headers = {'X-Api-Key': self._api_key, 'Content-Type': 'application/json'}
+        http = urllib3.PoolManager()
         url = self.api_uri + endpoint
-        requests.post(url, headers=headers, data=json.dumps(data))
+        headers = {'Content-Type': 'application/json', 'X-API-KEY': self._api_key}
+        encoded_data = json.dumps(data).encode('utf-8')
+        response = http.request('POST', url, headers=headers, body=encoded_data)
+        data = response.data.decode('utf-8')
 
     def put(self, endpoint: str, data):
         """
