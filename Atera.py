@@ -7,6 +7,7 @@ class AteraAPI(object):
     """
     Initial Class for using Atera API
     """
+
     def __init__(self, key: str):
         """
         Init for AteraAPI
@@ -74,6 +75,29 @@ class AteraAPI(object):
         url = self.api_uri + endpoint
         requests.delete(url, headers=headers)
 
+    def get_customerlist(self, page=1, amount=50):
+        """
+        Get list of Customers
+        :return: Customers as list of dicts
+        """
+        return self.get(f"customers?page={page}&itemsInPage={amount}")
+
+    def get_customerlist_all(self):
+        """
+        grabs literally all customers
+        :return: list of dicts
+        """
+        custs = self.get_customerlist()
+        output = [custs['items']]
+        i = 1
+        print("grabbed first page")
+        while int(custs['page']) < int(custs['totalPages']):
+            i += 1
+
+            custs = self.get_customerlist(page=i)
+            output.append(custs['items'])
+        return [item for sublist in output for item in sublist]
+
     def get_agents(self, page=1, amount=50):
         """
         Get list of agents
@@ -111,7 +135,7 @@ class AteraAPI(object):
             return self.get(f"agents/{agentid}")
         if type(agentid) == str:
             return self.get(f"agents/machine/{agentid}")
-    
+
     def get_ticket(self, ticketId):
         """
         Returns specific ticket.
@@ -120,7 +144,7 @@ class AteraAPI(object):
         """
         return self.get(f"tickets/{ticketId}")
 
-        def get_tickets(self, statustype=None, page=1, amount=50):
+    def get_tickets(self, statustype=None, page=1, amount=50):
         """
         Get list of agents
         :param statustype: The type of status of the ticket
