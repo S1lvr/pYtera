@@ -1,4 +1,3 @@
-import requests
 import urllib3
 import json
 
@@ -60,9 +59,12 @@ class AteraAPI(object):
             endpoint:
             data:
         """
-        headers = {'X-Api-Key': self._api_key, 'Content-Type': 'application/json'}
+        http = urllib3.PoolManager()
         url = self.api_uri + endpoint
-        requests.put(url, headers=headers, data=json.dumps(data))
+        headers = {'X-Api-Key': self._api_key, 'Content-Type': 'application/json'}
+        encoded_data = json.dumps(data).encode('utf-8')
+        response = http.request('PUT', url, headers=headers, body=encoded_data)
+        data = response.data.decode('utf-8')
 
     def delete(self, endpoint: str):
         """
@@ -71,9 +73,10 @@ class AteraAPI(object):
         Args:
             endpoint:
         """
+        http = urllib3.PoolManager()
         headers = {'X-Api-Key': self._api_key}
         url = self.api_uri + endpoint
-        requests.delete(url, headers=headers)
+        response = http.request("DELETE", url, headers=headers)
 
     def get_customerlist(self, page=1, amount=50):
         """
